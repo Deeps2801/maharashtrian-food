@@ -7,7 +7,7 @@ import Home from "./components/Home";
 import Ourstory from "./components/Ourstory";
 import Menu from "./components/menu";
 import Branches from "./components/branches";
-import ContactUI from "./components/contactus";
+import ContactUI from "./components/ContactUI";
 import OurSpeciality from "./components/ourspeciality";
 import Login from "./components/LoginUI";
 import Dashboard from "./components/Dashboard";
