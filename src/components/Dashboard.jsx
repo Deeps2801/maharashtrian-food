@@ -1,4 +1,4 @@
-import Sidebar from "./sidebar";
+import Sidebar from "./Sidebar";
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 

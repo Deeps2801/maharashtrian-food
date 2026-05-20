@@ -42,7 +42,7 @@ const Ourstory = () => {
 
         </div>
       </div>
-    </div>git rm -r --cached .
+    </div>
   );
 };
 
