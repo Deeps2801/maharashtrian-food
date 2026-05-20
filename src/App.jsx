@@ -5,20 +5,20 @@ import ScrollToHash from "./components/ScrollToHash";
 
 import Home from "./components/Home";
 import Ourstory from "./components/Ourstory";
-import Menu from "./components/menu";
-import Branches from "./components/branches";
+import Menu from "./components/Menu";
+import Branches from "./components/Branches";
 import ContactUI from "./components/ContactUI";
 import OurSpeciality from "./components/ourspeciality";
 import Login from "./components/LoginUI";
 import Dashboard from "./components/Dashboard";
-import Customers from "./components/customers";
+import Customers from "./components/Customers";
 import  DashboardHome from "./components/DashboardHome";
-import Dishes from "./components/dishes";
+import Dishes from "./components/Dishes";
 import ProtectedRoute from "./components/ProtectedRoute";
 import DishDetails from "./components/DishDetails";
-import NewArrival from "./components/newarrival";
-import Signup from "./components/signup";
-import Category from "./components/category";
+import NewArrival from "./components/NewArrival";
+import Signup from "./components/Signup";
+import Category from "./components/Category";
 export default function App() {
  
   return (
