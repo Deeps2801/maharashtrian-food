@@ -8,7 +8,7 @@ import Ourstory from "./components/Ourstory";
 import Menu from "./components/Menu";
 import Branches from "./components/Branches";
 import ContactUI from "./components/ContactUI";
-import OurSpeciality from "./components/ourspeciality";
+import OurSpeciality from "./components/OurSpeciality";
 import Login from "./components/LoginUI";
 import Dashboard from "./components/Dashboard";
 import Customers from "./components/Customers";
