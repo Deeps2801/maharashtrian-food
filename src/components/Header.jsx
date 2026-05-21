@@ -1,8 +1,30 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect ,useRef } from "react";
 export default function Header() {
      const [menuOpen, setMenuOpen] = useState(false);
-    return <nav className="shadow-md fixed w-full top-0 z-50 bg-[#fbf4ef]">
+     const menuRef = useRef();
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target)
+      ) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside
+      );
+    };
+  }, []);
+    return <nav className="shadow-md fixed w-full top-0 z-50 bg-[#fbf4ef]"  ref={menuRef}>
                 <div className="flex justify-between items-center px-6">
                     {/* LOGO */}
                     <div className="flex items-center">
@@ -39,33 +61,28 @@ export default function Header() {
                     </ul>
 
                     {/* MOBILE BUTTON */}
-                    <button
-                    className="md:hidden text-2xl"
-                    onClick={() => setMenuOpen(!menuOpen)}
-                    >
-                    ☰
-                    </button>
+                    <button className="md:hidden text-2xl" onClick={() => setMenuOpen(!menuOpen)}>☰</button>
                 </div>
 
                 {/* MOBILE MENU */}
                 {menuOpen && (
                             <div className="md:hidden bg-white px-6 pb-4 space-y-3">
-                            <Link to="/#home" className="block">
+                            <Link to="/#home" className="block" onClick={() => setMenuOpen(false)}>
                                 Home
                             </Link>
-                            <Link to="/#ourstory" className="block">
+                            <Link to="/#ourstory" className="block" onClick={() => setMenuOpen(false)}>
                                 Our Story
                             </Link>
-                            <Link to="/#menu" className="block">
+                            <Link to="/#menu" className="block" onClick={() => setMenuOpen(false)}>
                                 Menu
                             </Link>
-                            <Link to="/#recipe" className="block">
+                            <Link to="/#recipe" className="block" onClick={() => setMenuOpen(false)}>
                                 Recipe
                             </Link>
-                            <Link to="/#ourbranches" className="block">
+                            <Link to="/#ourbranches" className="block" onClick={() => setMenuOpen(false)}>
                                 Branches
                             </Link>
-                            <Link to="/#contact" className="block">
+                            <Link to="/#contact" className="block" onClick={() => setMenuOpen(false)}>
                                 Contact
                             </Link>
                             </div>
