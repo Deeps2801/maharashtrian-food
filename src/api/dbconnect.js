@@ -1,7 +1,7 @@
 require("dotenv").config();
 const mysql = require("mysql2");
 
-const isLocal = process.env.NODE_ENV === "online";
+const isLocal = process.env.NODE_ENV === "local";
 
 const db = mysql.createConnection({
   host: isLocal

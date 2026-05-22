@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import API_URL from "./api";
 export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -19,9 +20,8 @@ export default function Signup() {
 
     setLoading(true);
 
-
     try {
-    const res = await axios.post("http://localhost:5000/register", {name,email,password,});
+    const res = await axios.post(`${API_URL}/register`, {name,email,password,});
  
     if (res.status === 200) {
       alert("Signup Successful!");
