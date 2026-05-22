@@ -18,12 +18,7 @@ export default function Home() {
         </button>
       </div>
 
-      {/* BOTTOM CENTER LEAF */}
-      <img
-        src="/assets/leaf.png" // add your leaf image in public folder
-        alt="leaf"
-        className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 opacity-80"
-      />
+     
     </div>
   );
 }

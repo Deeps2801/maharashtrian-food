@@ -85,7 +85,10 @@ export default function Header() {
                             <Link to="/#contact" className="block" onClick={() => setMenuOpen(false)}>
                                 Contact
                             </Link>
-                            </div>
+                            <Link to="/login" className="block" onClick={() => setMenuOpen(false)}>
+                                Contact
+                            </Link>
+                        </div>
                 )}
             </nav>;
 }
