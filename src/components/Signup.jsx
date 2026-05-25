@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import API_URL from "../api";
+
+
 export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -50,9 +52,10 @@ export default function Signup() {
 
     {/* Title */}
     <h2 className="text-3xl font-bold text-center mb-6 text-orange-700">
-      Create Account
+      Create Account 
+      
     </h2>
-
+{`${API_URL}/register`}
     {/* Name */}
     <input
       type="text"
