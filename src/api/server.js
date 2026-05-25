@@ -1,14 +1,15 @@
-const express = require("express");
-const cors = require("cors");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const multer = require("multer");
-const db = require("./dbconnect");
+  const express = require("express");
+  const cors = require("cors");
+  const bcrypt = require("bcryptjs");
+  const jwt = require("jsonwebtoken");
+  const multer = require("multer");
+  const db = require("./dbconnect");
 
-const app = express();
-app.use("/uploads", express.static("uploads"));
-app.use(cors());
-app.use(express.json());
+  const app = express();
+    app.use(express.json());
+  app.use("/uploads", express.static("uploads"));
+  app.use(cors());
+
 
 const SECRET_KEY = "a!09#sos^";
 
@@ -25,58 +26,108 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 // REGISTER
 app.post("/register", async (req, res) => {
- 
-const { name, email, password } = req.body;
-try {
+  try {
+    console.log(req.body);
 
-    // HASH PASSWORD
-    const hashedPassword =
-      await bcrypt.hash(password, 10);
+    // CHECK BODY
+    if (!req.body) {
+      return res.status(400).json({
+        message: "Request body is missing",
+      });
+    }
 
-    const sql =
-      "INSERT INTO users(name,email,password) VALUES(?,?,?)";
+    const { name, email, password } = req.body;
 
-    db.query(
-      sql,
-      [name, email, hashedPassword],
-      (err, result) => {
+    // VALIDATION
+    if (!name || !email || !password) {
+      return res.status(400).json({
+        message: "All fields are required",
+      });
+    }
 
-        if (err) {
-          return res.status(500).json(err);
-        }
+    // EMAIL VALIDATION
+    const emailRegex =
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        // CREATE JWT TOKEN
-        const token = jwt.sign(
-          {
-            id: result.insertId,
-            email: email,
-          },
-          SECRET_KEY,
-          {
-            expiresIn: "1d",
-          }
-        );
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        message: "Invalid email format",
+      });
+    }
 
-        // RESPONSE
-        res.json({
-          message: "User Registered Successfully",
-          token,
-          user: {
-            id: result.insertId,
-            name,
-            email,
-          },
-        });
+    // PASSWORD VALIDATION
+    if (password.length < 6) {
+      return res.status(400).json({
+        message:
+          "Password must be at least 6 characters",
+      });
+    }
 
+    // CHECK USER EXISTS
+    const checkSql =
+      "SELECT * FROM users WHERE email = ?";
+
+    db.query(checkSql, [email], async (err, result) => {
+      if (err) {
+        return res.status(500).json(err);
       }
-    );
 
+      if (result.length > 0) {
+        return res.status(400).json({
+          message: "Email already exists",
+        });
+      }
+
+      // HASH PASSWORD
+      const hashedPassword = await bcrypt.hash(
+        password,
+        10
+      );
+
+      // INSERT USER
+      const sql =
+        "INSERT INTO users(name,email,password) VALUES(?,?,?)";
+
+      db.query(
+        sql,
+        [name, email, hashedPassword],
+        (err, result) => {
+          if (err) {
+            return res.status(500).json(err);
+          }
+
+          // JWT TOKEN
+          const token = jwt.sign(
+            {
+              id: result.insertId,
+              email,
+            },
+            SECRET_KEY,
+            {
+              expiresIn: "1d",
+            }
+          );
+
+          // RESPONSE
+          res.status(201).json({
+            message:
+              "User Registered Successfully",
+            token,
+            user: {
+              id: result.insertId,
+              name,
+              email,
+            },
+          });
+        }
+      );
+    });
   } catch (error) {
+    console.log(error);
 
     res.status(500).json({
       message: "Server Error",
     });
-
   }
 });
 
